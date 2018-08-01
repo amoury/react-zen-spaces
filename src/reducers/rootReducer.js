@@ -1,7 +1,9 @@
 import { combineReducers } from 'redux';
 
+import spacesReducer from '../app/features/spaces/spacesReducer';
+
 const rootReducer = combineReducers({
-  state: (state = {}) => state
+  spaces: spacesReducer
 });
 
 export default rootReducer;
