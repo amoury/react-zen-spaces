@@ -1,0 +1,12 @@
+.search_form_wrapper {
+  margin: 0 20px
+}
+
+.search_form_wrapper>.icon.input {
+  width: 300px;
+}
+
+.search_form_wrapper input {
+  border-radius: unset; 
+  width: 100%;
+}
