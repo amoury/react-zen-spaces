@@ -1,11 +1,12 @@
 import React from "react";
 import { Image, Card, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 import spaceImage from '../../../assets/images/about_banner.png';
 
 const SpaceCard = ({item}) => {
   return (
-    <Card href={`/spaces/${item.id}`}>
+    <Card as={Link} to={`/spaces/${item.id}`}>
       <Image src={spaceImage} />
       <Card.Content>
         <Card.Header>{item.header}</Card.Header>

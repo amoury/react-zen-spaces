@@ -1,23 +1,22 @@
 import React, { Component, Fragment } from 'react';
-import { Route } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
-import Navigation from './layout/Navigation/Navigation';
-import Main from './layout/Main/Main';
-import EventList from './features/events/EventList';
+
+import HomePage from './pages/HomePage';
 import SpaceDetailPage from './features/spaces/SpaceDetailPage/SpaceDetailPage';
+import EventsPage from './pages/EventsPage';
+import AdminPage from './pages/AdminPage';
 
 class App extends Component {
   render() {
-    return (
-      <Fragment>
-        <Navigation />
-        
-        <Route exact path='/' component={Main}/>
-        <Route path='/events' component={EventList}/>
-        <Route path ='/spaces/:id' component={SpaceDetailPage} />
-
-      </Fragment>
-    );
+    return <Fragment>
+        <Switch>
+          <Route exact path="/" component={HomePage} />
+          <Route path="/events" component={EventsPage} />
+          <Route path="/spaces/:id" component={SpaceDetailPage} />
+          <Route path="/admin" component={AdminPage} />
+        </Switch>
+      </Fragment>;
   }
 }
 

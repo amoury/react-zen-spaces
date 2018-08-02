@@ -32,6 +32,9 @@ const Navigation = () => {
             <li className={ styles.nav_link }>
               <NavLink to="/register">Sign up</NavLink>
             </li>
+            <li className={ styles.nav_link }>
+              <NavLink to="/admin">Admin</NavLink>
+            </li>
           </ul>
         </div>
       </nav>

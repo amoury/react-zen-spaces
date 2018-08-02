@@ -1,4 +1,4 @@
-import { FETCH_SPACES } from './spacesActions';
+import { FETCH_SPACES, CREATE_SPACE, UPDATE_SPACE, DELETE_SPACE } from './spacesActions';
 
 const initialState = [
   {
@@ -47,6 +47,15 @@ const spacesReducer = (state = initialState, action) => {
   switch (action.type) {
     case FETCH_SPACES:
       return action.payload.spaces;
+    case CREATE_SPACE:
+      return [...state, Object.assign({}, action.payload)];
+    case UPDATE_SPACE:
+      return [
+        ...state.filter(space => space.id !== action.payload.space.id), 
+        Object.assign({}, action.payload.space)
+      ]
+    case DELETE_SPACE: 
+      return [...state.filter(space => space.id !== action.payload)]
     default:
       return state;
   }
