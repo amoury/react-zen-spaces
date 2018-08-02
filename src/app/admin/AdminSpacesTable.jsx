@@ -10,7 +10,7 @@ const AdminSpacesTable = ({ spaces, deleteSpace }) => {
       </Table.Cell>
       <Table.Cell>{space.location}</Table.Cell>
       <Table.Cell>
-        <Rating icon="star" defaultRating={3} maxRating={5} />
+        <Rating icon="star" rating={space.rating} maxRating={5} />
       </Table.Cell>
       <Table.Cell>
         <Button content="Edit" primary as={Link} to={`/admin/spaces/edit/${space.id}`} />

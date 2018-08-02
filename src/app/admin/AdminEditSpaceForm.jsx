@@ -1,111 +1,89 @@
 import React, { Component, Fragment } from "react";
 import { Form, Header, Segment, Button } from "semantic-ui-react";
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
+import { reduxForm, Field } from "redux-form";
+import { composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
 import cuid from "cuid";
 
-import { createSpace, updateSpace } from '../features/spaces/spacesActions';
+import { createSpace, updateSpace } from "../features/spaces/spacesActions";
+import TextInput from "../form/TextInput";
+import TextArea from "../form/TextArea";
+
+const validate = combineValidators({
+  header: isRequired({message: 'The space name is required'}),
+  description: isRequired('description'),
+  meta: isRequired('meta'),
+  contactDetails: isRequired('Contact Details'),
+  location: isRequired('location'),
+  overview: isRequired('overview')
+})
 
 class AdminEditSpaceForm extends Component {
-  state = {
-    space: {
-      header: "",
-      description: "",
-      meta: "",
-      contactDetails: "",
-      location: "",
-      overview: ""
-    }
-  };
-
-  componentDidMount = () => {
-    if(this.props.match.params.id && this.props.spaces) {
-      const matchingFields = this.props.spaces.filter(space => space.id === this.props.match.params.id)[0];
-      this.setState({space: matchingFields})
-    }
-  }
-
-  handleInputChange = event => {
-    const newSpace = this.state.space;
-    newSpace[event.target.name] = event.target.value;
-    this.setState({
-      space: newSpace
-    });
-  };
-
-  handleFormSubmit = () => {
-    const newSpace = this.state.space;
-
-    if(this.props.match.params.id) {
-      this.setState({ space: newSpace });
-      this.props.updateSpace(this.state.space);
+  
+  handleFormSubmit = (values) => { 
+    if (this.props.initialValues.id) {
+      this.props.updateSpace(values);
       this.props.history.push("/admin/spaces");
       return;
-    } 
-
-    newSpace['id'] = cuid();
-    this.setState({ space: newSpace })
-    this.props.createSpace(this.state.space);
-
-    this.props.history.push('/admin/spaces');
+    }
+    const newSpace = {...values, id: cuid() }
+    this.props.createSpace(newSpace);
+    this.props.history.push("/admin/spaces");
   };
 
   render() {
-    const { space } = this.state;
+    const { invalid, submitting, pristine } = this.props;
     return (
       <Fragment>
         <Header as="h1">Add New Space</Header>
 
         <Segment>
-          <Form onSubmit={this.handleFormSubmit}>
-            <Form.Input
-              label="Space Name"
-              type="text"
-              placeholder="Name of the Space"
+          <Form onSubmit={this.props.handleSubmit(this.handleFormSubmit)}>
+            <Field
               name="header"
-              value={space.header}
-              onChange={this.handleInputChange}
-            />
-            <Form.Input
-              label="Short Description"
               type="text"
+              component={TextInput}
+              placeholder="Enter the name of the space"
+              label="Space Name"
+            />
+            <Field
               name="description"
-              placeholder="Description of the Space"
-              value={space.description}
-              onChange={this.handleInputChange}
-            />
-            <Form.Input
-              label="Space Timings"
               type="text"
+              component={TextInput}
+              placeholder="Enter the description of the space"
+              label="Short Description"
+            />
+            <Field
               name="meta"
-              placeholder="Timings"
-              value={space.meta}
-              onChange={this.handleInputChange}
-            />
-            <Form.Input
-              label="Contact Details"
               type="text"
+              component={TextInput}
+              placeholder="Enter the timings of the space"
+              label="Operating Hours"
+            />
+            <Field
               name="contactDetails"
-              placeholder="Enter the Phone Number"
-              value={space.contactDetails}
-              onChange={this.handleInputChange}
-            />
-            <Form.Input
-              label="Location"
               type="text"
+              component={TextInput}
+              placeholder="Enter the phone number"
+              label="Contact Number"
+            />
+            <Field
               name="location"
-              placeholder="Enter the area name"
-              value={space.location}
-              onChange={this.handleInputChange}
+              type="text"
+              component={TextInput}
+              placeholder="Enter the Location"
+              label="Location"
             />
-            <Form.TextArea
-              label="Overview"
+            <Field
               name="overview"
-              placeholder="Write the Overview"
-              value={space.overview}
-              onChange={this.handleInputChange}
+              type="textarea"
+              component={TextArea}
+              placeholder="Enter the Overview"
+              label="Overview"
             />
-            <Button type="submit" color="blue">
-              Add Space
+
+            <Button disabled={invalid || submitting || pristine } type="submit" color="blue">
+              Submit
             </Button>
           </Form>
         </Segment>
@@ -114,8 +92,16 @@ class AdminEditSpaceForm extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  spaces: state.spaces
-})
+const mapStateToProps = (state, ownProps) => {
+  const spaceId = ownProps.match.params.id;
+  let space = {};
+  if (spaceId && state.spaces.length > 0) {
+    space = state.spaces.filter( space => space.id === spaceId)[0];
+  }
+  return { initialValues: space };
+};
 
-export default connect(mapStateToProps, {createSpace, updateSpace})(AdminEditSpaceForm);
+export default connect(
+  mapStateToProps,
+  { createSpace, updateSpace }
+)(reduxForm({ form: "spaceForm", enableReinitialize: true, validate })(AdminEditSpaceForm));

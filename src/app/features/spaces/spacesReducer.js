@@ -4,6 +4,7 @@ const initialState = [
   {
     id: "001",
     header: "In5",
+    rating: 3,
     description: "Amazing Co-working space near Jumeirah",
     meta: "Timings: 10 am - 1 am",
     contactDetails: "+971 4 234 5678",
@@ -13,6 +14,7 @@ const initialState = [
   },
   {
     id: "002",
+    rating: 5,
     header: "In10",
     description: "Amazing Co-working space near Jumeirah",
     meta: "Timings: 10 am - 1 am",
@@ -23,6 +25,7 @@ const initialState = [
   },
   {
     id: "003",
+    rating: 2,
     header: "In20",
     description: "Amazing Co-working space near Jumeirah",
     meta: "Timings: 10 am - 1 am",
@@ -34,6 +37,7 @@ const initialState = [
   {
     id: "004",
     header: "In5",
+    rating: '4',
     description: "Amazing Co-working space near Jumeirah",
     meta: "Timings: 10 am - 1 am",
     contactDetails: "+971 4 234 5678",

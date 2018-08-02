@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment, Header } from 'semantic-ui-react';
 import styles from './EventsBandSection.module.css';
-import SubscriptionForm from '../SubscriptionForm/SubscriptionForm';
+import SubscriptionForm from '../SubscriptionForm';
 
 const EventsBandSection = () => {
   return (

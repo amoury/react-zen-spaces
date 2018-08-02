@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 
 import Hero from "../layout/Hero/Hero";
-import SectionContainer from "../layout/SectionContainer/SectionContainer";
+import SectionContainer from "../layout/SectionContainer";
 import SpaceCardList from "../features/spaces/SpaceCardList";
 import EventsBandSection from "../layout/EventsBandSection/EventsBandSection";
 import EventList from "../features/events/EventList";
