@@ -17,7 +17,8 @@ import firebase from './app/config/firebase';
 const rrfConfig = {
   userProfile: 'users',
   attachAuthIsReady: true,
-  useFirestoreForProfile: true
+  useFirestoreForProfile: true,
+  updateProfileOnLogin: false
 }
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
