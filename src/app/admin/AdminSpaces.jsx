@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
+
 
 import { Container, Grid, Button } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
@@ -36,9 +38,9 @@ class AdminSpaces extends Component {
 }
 
 const mapStateToProps = state => ({
-  spaces: state.spaces
+  spaces: state.firestore.ordered.spaces
 })
 
-export default connect(mapStateToProps, { deleteSpace })(AdminSpaces);
+export default connect(mapStateToProps, { deleteSpace })(firestoreConnect([{ collection: 'spaces' }])(AdminSpaces));
 
 

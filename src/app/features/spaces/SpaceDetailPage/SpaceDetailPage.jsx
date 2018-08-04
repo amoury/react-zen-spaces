@@ -1,6 +1,7 @@
 import React from "react";
 import { Container, Grid } from "semantic-ui-react";
 import { connect } from "react-redux";
+import { firestoreConnect } from 'react-redux-firebase';
 
 
 import SpaceDetailHeader from "./SpaceDetailHeader";
@@ -9,7 +10,7 @@ import SpaceDetailRight from "./SpaceDetailRight";
 import MainLayout from '../../../layout/MainLayout';
 
 const SpaceDetailPage = props => {
-  const currentSpace = props.spaces.filter(
+  const currentSpace = props.spaces && props.spaces.filter(
     space => space.id === props.match.params.id
   )[0];
 
@@ -32,7 +33,7 @@ const SpaceDetailPage = props => {
 };
 
 const mapStateToProps = state => ({
-  spaces: state.spaces
+  spaces: state.firestore.ordered.spaces
 });
 
-export default connect(mapStateToProps)(SpaceDetailPage);
+export default connect(mapStateToProps)(firestoreConnect([{ collection: 'spaces' }])(SpaceDetailPage));

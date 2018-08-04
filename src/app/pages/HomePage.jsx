@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
+import { firestoreConnect } from 'react-redux-firebase';
 
 import Hero from "../layout/Hero/Hero";
 import SectionContainer from "../layout/SectionContainer";
@@ -7,6 +8,7 @@ import SpaceCardList from "../features/spaces/SpaceCardList";
 import EventsBandSection from "../layout/EventsBandSection/EventsBandSection";
 import EventList from "../features/events/EventList";
 import MainLayout from '../layout/MainLayout';
+import LoadingComponent from '../layout/LoadingComponent';
 
 const spaceCategories = [
   {
@@ -29,10 +31,12 @@ const spaceCategories = [
 
 class HomePage extends Component {
   state = {
-    spaceCategories: spaceCategories
+    spaceCategories: spaceCategories,
   };
 
   render() {
+    const { loading } = this.props;
+    if (loading) return <LoadingComponent/>
     return (
       <MainLayout>
         
@@ -70,7 +74,8 @@ class HomePage extends Component {
 }
 
 const mapStateToProps = state => ({
-  spaces: state.spaces
+  spaces: state.firestore.ordered.spaces,
+  async: state.async
 })
 
-export default connect(mapStateToProps)(HomePage);
+export default connect(mapStateToProps)(firestoreConnect([{ collection: 'spaces' }])(HomePage));

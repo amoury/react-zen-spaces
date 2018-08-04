@@ -3,6 +3,8 @@ import { Table, Header, Rating, Button } from "semantic-ui-react";
 import { Link } from 'react-router-dom';
 
 const AdminSpacesTable = ({ spaces, deleteSpace }) => {
+  if (! spaces ) return 'loading...';
+  
   const spacesRows = spaces.map(space => (
     <Table.Row key={space.id}>
       <Table.Cell>

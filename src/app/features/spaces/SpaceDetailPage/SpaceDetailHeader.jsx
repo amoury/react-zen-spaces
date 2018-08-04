@@ -4,6 +4,9 @@ import { Segment, Header, Image, Rating } from "semantic-ui-react";
 import image from "../../../../assets/images/about_banner.png";
 
 const SpaceDetailHeader = ({space}) => {
+  if ( !space ) {
+    return 'loading...'
+  }
   return (
     <Segment.Group>
       <Segment attached="top">

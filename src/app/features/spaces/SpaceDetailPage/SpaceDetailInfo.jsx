@@ -3,6 +3,10 @@ import { Segment, Header, Divider, Icon } from "semantic-ui-react";
 import renderHTML from "react-render-html";
 
 const SpaceDetailInfo = ({ space }) => {
+  if(!space) {
+    return 'loading...'
+  }
+  
   return (
     <Segment.Group>
       <Segment>

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from "react";
 import { Form, Header, Segment, Button } from "semantic-ui-react";
 import { connect } from "react-redux";
 import { reduxForm, Field } from "redux-form";
-import { composeValidators, combineValidators, isRequired, hasLengthGreaterThan } from 'revalidate';
+import { combineValidators, isRequired } from 'revalidate';
 import cuid from "cuid";
 
 import { createSpace, updateSpace } from "../features/spaces/spacesActions";
